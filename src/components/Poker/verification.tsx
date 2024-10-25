@@ -1,4 +1,4 @@
-export const repeatIn = (arr: number[], nFactor: number) => {
+export const repeatIn = (arr: string[], nFactor: number) => {
     if (nFactor === 1 && arr.length > 1) {
       return true;
     }
