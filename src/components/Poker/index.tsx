@@ -1,14 +1,13 @@
-import { useEffect, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { repeatIn } from "./verification";
+import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useState } from "react";
 
 interface Card {
   suit: string;
   rank: string;
 }
 
-const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
-const ranks = ['7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+const suits = ["Hearts", "Diamonds", "Clubs", "Spades"];
+const ranks = ["7", "8", "9", "10", "J", "Q", "K", "A"];
 
 const generateDeck = (): Card[] => {
   const deck: Card[] = [];
@@ -51,16 +50,21 @@ const Poker = () => {
     const counts = Object.values(countMap);
 
     if (counts.includes(4)) {
-      return { condition: "Carré", value: 7 };
+      return { condition: "Carré", value: 12 };
     } else if (counts.includes(3)) {
-      return { condition: "Brelan", value: 6 };
-    } else if (counts.filter(count => count === 2).length === 2) {
-      return { condition: "Double paire", value: 5 };
+      return { condition: "Brelan", value: 11 };
+    } else if (counts.filter((count) => count === 2).length === 2) {
+      return { condition: "Double paire", value: 10 };
     } else if (counts.includes(2)) {
-      return { condition: "Paire", value: 4 };
+      return { condition: "Paire", value: 9 };
     } else {
-      const highestCard = Math.max(...arr.map(card => ranks.indexOf(card.rank)));
-      return { condition: `Carte la plus haute (${ranks[highestCard]})`, value: highestCard };
+      const highestCard = Math.max(
+        ...arr.map((card) => ranks.indexOf(card.rank))
+      );
+      return {
+        condition: `Carte la plus haute (${ranks[highestCard]})`,
+        value: highestCard,
+      };
     }
   };
 
@@ -86,7 +90,7 @@ const Poker = () => {
     setComputerHand([]);
     setVictoryCondition(null);
     setResult(null);
-    const timeoutDelay = 500; 
+    const timeoutDelay = 500;
     const playerCards = pickCards();
     const computerCards = pickCards();
 
@@ -125,7 +129,15 @@ const Poker = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <div className="text-2xl font-bold">{card.rank}</div>
-                  <div className={`text-xl ${card.suit === 'Hearts' || card.suit === 'Diamonds' ? 'text-red-500' : 'text-black'}`}>{card.suit}</div>
+                  <div
+                    className={`text-xl ${
+                      card.suit === "Hearts" || card.suit === "Diamonds"
+                        ? "text-red-500"
+                        : "text-black"
+                    }`}
+                  >
+                    {card.suit}
+                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -144,7 +156,15 @@ const Poker = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <div className="text-2xl font-bold">{card.rank}</div>
-                  <div className={`text-xl ${card.suit === 'Hearts' || card.suit === 'Diamonds' ? 'text-red-500' : 'text-black'}`}>{card.suit}</div>
+                  <div
+                    className={`text-xl ${
+                      card.suit === "Hearts" || card.suit === "Diamonds"
+                        ? "text-red-500"
+                        : "text-black"
+                    }`}
+                  >
+                    {card.suit}
+                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -152,12 +172,23 @@ const Poker = () => {
         </div>
         {result && (
           <div className="mb-6 text-lg font-bold">
-            {result === "win" && <p className="text-white">Vous avez gagné avec : {victoryCondition}</p>}
-            {result === "lose" && <p className="text-white">Vous avez perdu contre : {victoryCondition}</p>}
+            {result === "win" && (
+              <p className="text-white">
+                Vous avez gagné avec : {victoryCondition}
+              </p>
+            )}
+            {result === "lose" && (
+              <p className="text-white">
+                Vous avez perdu contre : {victoryCondition}
+              </p>
+            )}
             {result === "draw" && <p className="text-white">Égalité.</p>}
           </div>
         )}
-        <button onClick={handleGameStart} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        <button
+          onClick={handleGameStart}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+        >
           Démarrer
         </button>
       </div>
