@@ -1,0 +1,5 @@
+services:
+  poker:
+    image: tit09876543/poker:latest
+    ports:
+      - "80:80"
